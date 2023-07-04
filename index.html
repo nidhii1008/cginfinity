@@ -79,12 +79,12 @@
             <div class="modal-body">
              
             <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+              <label for="loginEmailInput" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="loginEmailInput" placeholder="name@example.com">
             </div>
             <div class="mb-3">
-              <label for="inputPassword5" class="form-label">Password</label>
-              <input type="password" id="inputPassword5" class="form-control" aria-labelledby="passwordHelpBlock">
+              <label for="loginPasswordInput" class="form-label">Password</label>
+              <input type="password" id="loginPasswordInput" class="form-control" aria-labelledby="passwordHelpBlock">
               <div id="passwordHelpBlock" class="form-text">
               </div>
             </div>
@@ -96,7 +96,7 @@
             </div>
             <div class="modal-footer">
               
-              <button type="button" class="btn btn-primary" onclick="window.location.href='Employee.html';">Login</button>
+              <button type="button" class="btn btn-primary" id="loginButton">Login</button>
             </div>
           </div>
         </div>
@@ -104,38 +104,43 @@
 
       <!--Register Modal-->
       <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog ">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="exampleModalLabel">Register</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body ">
-              <div class="mb-2">
-                <label for="nameInput" class="form-label">Name</label>
-                <input type="text" class="form-control" id="nameInput" placeholder="abc">
-              </div>
-              <div class="mb-2">
-                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-              </div>
-              <div class="mb-2">
-                <label for="inputPassword5" class="form-label">Password</label>
-                <input type="password" id="inputPassword5" class="form-control" aria-labelledby="passwordHelpBlock">
-                <div id="passwordHelpBlock" class="form-text">
-                  Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+            <div class="modal-body">
+              <form id="registrationForm">
+                <div class="mb-2">
+                  <label for="nameInput" class="form-label">Name</label>
+                  <input type="text" class="form-control" id="nameInput" placeholder="abc">
                 </div>
-              </div>
-              <div class="mb-2">
-              <a class="primary" data-bs-toggle="modal" data-bs-target="#registerModal"><u>Already an existing user? Log In.</u></a>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary">Register</button>
+                <div class="mb-2">
+                  <label for="emailInput" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="emailInput" placeholder="name@example.com">
+                </div>
+                <div class="mb-2">
+                  <label for="passwordInput" class="form-label">Password</label>
+                  <input type="password" id="passwordInput" class="form-control" aria-labelledby="passwordHelpBlock">
+                  <div id="passwordHelpBlock" class="form-text">
+                    Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                  </div>
+                </div>
+                <div class="mb-2">
+                  <a class="primary" data-bs-toggle="modal" data-bs-target="#loginModal"><u>Already an existing user? Log In.</u></a>
+                </div>
+                <div class="modal-footer">
+                  <button type="submit" id="register-button" class="btn btn-primary">Register</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>
       </div>
+      
+     
+      
 
       <div class="container-fluid p-0">
         <img src="home.jpg" alt="home" width="100%">
@@ -190,5 +195,62 @@
         </div>
       </footer>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+     <script>
+// Get the registration form element
+const registrationForm = document.getElementById('registrationForm');
+
+// Add event listener to the form submission
+registrationForm.addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent form submission
+
+  // Get the form inputs
+  const nameInput = document.getElementById('nameInput');
+  const emailInput = document.getElementById('emailInput');
+  const passwordInput = document.getElementById('passwordInput');
+
+  // Check if any of the fields are empty
+  if (nameInput.value === '') {
+    alert('Please enter your name.');
+  } else if (emailInput.value === '') {
+    alert('Please enter your email address.');
+  } else if (passwordInput.value === '') {
+    alert('Please enter your password.');
+  } else {
+    // Bypass browser email validation
+    emailInput.setCustomValidity('');
+    passwordInput.setCustomValidity('');
+
+   // Close the register modal
+   const registerModal = document.getElementById('registerModal');
+      const bootstrapRegisterModal = bootstrap.Modal.getInstance(registerModal);
+      bootstrapRegisterModal.hide();
+
+      // Open the login modal
+      const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+      loginModal.show();
+  }
+});
+
+const loginButton = document.getElementById('loginButton');
+
+  loginButton.addEventListener('click', function() {
+    const loginEmailInput = document.getElementById('loginEmailInput');
+    const loginPasswordInput = document.getElementById('loginPasswordInput');
+
+    if (loginEmailInput.value === '') {
+      alert('Please enter your email address.');
+    } else if (loginPasswordInput.value === '') {
+      alert('Please enter your password.');
+    } else {
+      const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+      loginModal.hide();
+      window.location.href="Employee.html";
+      // Perform login logic here
+    }
+  });
+
+
+     </script>
+      
 </body>
 </html>
